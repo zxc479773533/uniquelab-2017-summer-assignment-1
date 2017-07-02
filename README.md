@@ -9,3 +9,7 @@ UniqueLab Summer Camp Assignment 0
 **所有接口以及功能参照 STL 文档**
 
 本次任务时间仅一周，且部分新人C++需要重头学，因此无需实现迭代器, 大多数函数返回值改为void.
+
+---华---丽---的---分---割---线---
+
+优先队列算法总结已在个人github.io更新：<br/>https://zxc479773533.github.io/algorithms/2017/07/02/Priority-Queue
