@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/panyue/code/my_github/uniquelab-2017-summer-assignment-1/priority_queue.h
+algorithm
+-
+vector
+-
+
+/home/panyue/code/my_github/uniquelab-2017-summer-assignment-1/set.h
+algorithm
+-
+
+/home/panyue/code/my_github/uniquelab-2017-summer-assignment-1/test2.cpp
+set.h
+/home/panyue/code/my_github/uniquelab-2017-summer-assignment-1/set.h
+priority_queue.h
+/home/panyue/code/my_github/uniquelab-2017-summer-assignment-1/priority_queue.h
+

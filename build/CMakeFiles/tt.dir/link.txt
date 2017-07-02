@@ -1,0 +1,1 @@
+/usr/bin/c++  -g  -rdynamic CMakeFiles/tt.dir/test.o  -o tt libpq.a libset.a 

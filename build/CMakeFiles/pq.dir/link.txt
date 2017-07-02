@@ -1,0 +1,2 @@
+/usr/bin/ar qc libpq.a  CMakeFiles/pq.dir/priority_queue.o
+/usr/bin/ranlib libpq.a

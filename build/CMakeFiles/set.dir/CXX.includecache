@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/panyue/code/my_github/uniquelab-2017-summer-assignment-1/set.cpp
+set.h
+/home/panyue/code/my_github/uniquelab-2017-summer-assignment-1/set.h
+
+/home/panyue/code/my_github/uniquelab-2017-summer-assignment-1/set.h
+algorithm
+-
+
