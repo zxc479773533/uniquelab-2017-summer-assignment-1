@@ -32,5 +32,6 @@
 *.app
 
 # My Configurations:
-*.vscode
+/.vscode/
 /build/
+CMakeLists.txt
