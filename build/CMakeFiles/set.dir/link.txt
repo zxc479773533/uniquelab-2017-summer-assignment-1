@@ -1,2 +1,0 @@
-/usr/bin/ar qc libset.a  CMakeFiles/set.dir/set.o
-/usr/bin/ranlib libset.a

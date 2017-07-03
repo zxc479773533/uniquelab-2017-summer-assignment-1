@@ -1,1 +1,0 @@
-/usr/bin/c++  -g  -rdynamic CMakeFiles/tt2.dir/test2.o  -o tt2 libpq.a 
