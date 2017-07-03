@@ -17,3 +17,5 @@ UniqueLab Summer Camp Assignment 0
 https://zxc479773533.github.io/algorithms/2017/07/02/Priority-Queue
 
 7.3更新：
+1. 修改了优先队列里面的一些问题，但对于大量的数据仍有些许bug.
+2. 完成了二叉搜索树来进行练手.
