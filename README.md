@@ -12,4 +12,8 @@ UniqueLab Summer Camp Assignment 0
 
 ---华---丽---的---分---割---线---
 
-优先队列算法总结已在个人github.io更新：<br/>https://zxc479773533.github.io/algorithms/2017/07/02/Priority-Queue
+7.2更新：优先队列算法总结已在个人github.io更新：
+
+https://zxc479773533.github.io/algorithms/2017/07/02/Priority-Queue
+
+7.3更新：
