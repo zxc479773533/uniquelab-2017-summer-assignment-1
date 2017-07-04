@@ -17,9 +17,9 @@ UniqueLab Summer Camp Assignment 0
 https://zxc479773533.github.io/algorithms/2017/07/02/Priority-Queue
 
 7.3更新：
-1. 修改了优先队列里面的一些问题，但对于大量的数据仍有些许bug.
-2. 完成了二叉搜索树来进行练手.
+1. 修改了优先队列里面的一些问题，但对于大量的数据仍有些许bug。
+2. 完成了二叉搜索树来进行练手，并进行了简易测试(test_BST.cpp)。
 
-7.4早上更新：
-
-优先队列测试完成，github.io已经修改，算法复杂度加以简化。
+7.4更新：
+1. 优先队列测试完成，github.io已经修改，算法复杂度加以简化。
+2. 完成了AVL树来进行练手，并进行了简易测试(test_AVL.cpp)。

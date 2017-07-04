@@ -19,18 +19,18 @@ BSTNode* Binary_search_tree::Find(const T& key) {
 }
 
 /* 查找数据对应的结点实现 */
-    BSTNode* Binary_search_tree::find(BSTNode* tree, const T& key) {
-        if (tree == NULL)
-            return NULL;
-        else {
-            if (tree->key == key)
-                return tree;
-            else if (tree->key > key)
-                return find(tree->left, key);
-            else
-                return find(tree->right, key);
-        }
+BSTNode* Binary_search_tree::find(BSTNode* tree, const T& key) {
+    if (tree == NULL)
+        return NULL;
+    else {
+        if (tree->key == key)
+            return tree;
+        else if (tree->key > key)
+            return find(tree->left, key);
+        else
+            return find(tree->right, key);
     }
+}
 
 /* 查找最小数接口 */
 BSTNode* Binary_search_tree::FindMin() {
