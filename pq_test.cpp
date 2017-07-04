@@ -44,9 +44,9 @@ namespace {
       nonstd_pq.push((double)i);
       std_pq.push(0.0f);
       nonstd_pq.push(0.0f);
+      EXPECT_EQ(std_pq.top(),nonstd_pq.top());    
     }
-    EXPECT_EQ(std_pq.top(),nonstd_pq.top());
-    EXPECT_EQ(std_pq.size(),nonstd_pq.top());
+    EXPECT_EQ(std_pq.size(),nonstd_pq.size());
     for(int i=0;i<20000;i++){
       EXPECT_EQ(std_pq.top(),nonstd_pq.top());
       std_pq.pop();
@@ -61,14 +61,15 @@ namespace {
       nonstd_pq.push((double)i);
       std_pq.push((double)-i);
       nonstd_pq.push((double)-i);
+      EXPECT_EQ(std_pq.top(),nonstd_pq.top());
+      
     }
     EXPECT_EQ(std_pq.size(),nonstd_pq.size());
-  EXPECT_EQ(std_pq.top(),nonstd_pq.top());
-  for(int i=0;i<20000;i++){
-      EXPECT_EQ(std_pq.top(),nonstd_pq.top());
-      std_pq.pop();
-      nonstd_pq.pop();
-  }
+    for(int i=0;i<20000;i++){
+        EXPECT_EQ(std_pq.top(),nonstd_pq.top());
+        std_pq.pop();
+        nonstd_pq.pop();
+    }
   }
   
 }

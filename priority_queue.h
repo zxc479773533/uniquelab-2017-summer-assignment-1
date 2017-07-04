@@ -10,6 +10,7 @@ using std::endl; //测试用输出
 
 class Priority_queue {
     public:
+          
         bool empty() const; //判断队列是否为空
         size_t size() const; //返回队列中数据的个数
         const T& top() const; //返回队列的头部数据
@@ -17,6 +18,5 @@ class Priority_queue {
         void pop(); //队列头部的数据出队
     private:
         vector<T> PriQueue; //存储类型vector
+        int currentsize = 0; //属性：当前队列大小
 };
-
-void swap(double &u, double &v); //交换两个数
