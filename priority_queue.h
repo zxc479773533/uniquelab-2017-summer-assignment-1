@@ -10,7 +10,6 @@ using std::endl; //测试用输出
 
 class Priority_queue {
     public:
-          
         bool empty() const; //判断队列是否为空
         size_t size() const; //返回队列中数据的个数
         const T& top() const; //返回队列的头部数据
