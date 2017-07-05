@@ -31,7 +31,7 @@ class Set {
     private:
         RBTNode *root = NULL;
         /* 接口 */
-        RBTNode* ins(RBTNode* tree, T key); //插入
+        void ins(RBTNode* tree, RBTNode* node); //插入
         void del(RBTNode* node); //删除
         void _clear(RBTNode* tree); //删除
         int _count(const T&); //判断数据是否存在

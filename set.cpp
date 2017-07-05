@@ -4,26 +4,41 @@
 
 /* 插入指定的结点接口 */
 void Set::insert(const T& key) {
-    root = ins(root, key);
-    RBTNode* new_node = find(root, key);
+    cout << "插入开始，key：" << key << endl;
+    RBTNode* new_node = new RBTNode(RED, key, NULL, NULL, NULL);
+    if (root == NULL)
+        root = new_node;
+    else
+        ins(root, new_node);
     insadjust(new_node);
+    cout << "插入结束" << endl;    
 }
 
 /* 插入指定的结点实现 */
-RBTNode* Set::ins(RBTNode* tree, T key) {
-    if (tree == NULL)
-        tree = new RBTNode(RED, key, NULL, NULL, NULL);
-    else if (key < tree->key) { //插入左子树
-        tree->left = ins(tree->left, key);
-        tree->left->parent = tree;
+void Set::ins(RBTNode* tree, RBTNode* node) {
+    RBTNode *p = tree, *pre = NULL;
+    while (p != NULL) {
+        if (p->key == node->key) {
+            cout << "This node has been added!" << endl;
+            break;
+        }
+        else if (p->key > node->key) {
+            pre = p;
+            p = p->left;
+        }
+        else if (p->key < node->key) {
+            pre = p;
+            p = p->right;
+        }
+        if (p == NULL) {
+            if (pre->key > node->key)
+                pre->left = node;
+            else
+                pre->right = node;
+            node->parent = pre;
+            delete(p);
+        }
     }
-    else if (key > tree->key) { //插入右子树
-        tree->right = ins(tree->right, key);
-        tree->right->parent = tree;
-    }
-    else //什么也不做
-        cout << "This node has been added!" << endl;
-    return tree;
 }
 
 /* 删除指定的结点接口 */
@@ -181,37 +196,60 @@ RBTNode* Set::uncle(RBTNode* tree) {
 
 /* 执行左旋 */
 void Set::leftrotation(RBTNode* k1) {
+    cout << "左旋，基点：" << k1->key << endl;
     RBTNode *k2 = k1->right;
     RBTNode *p = k1->parent;
     RBTColor t = k1->color;
     k1->right = k2->left;
-    k2->left->parent = k1;
+    if (k2->left != NULL)
+        k2->left->parent = k1;
     k2->left = k1;
     k1->parent = k2;
+    if (p != NULL && p->left == k1)
+        p->left = k2;
+    else if (p != NULL && p->right == k1)
+        p->right = k2;
     k2->parent = p;
     k1->color = k2->color;
     k2->color = t;
+    if (k1 == root)
+        root = k2;
 }
 
 /* 执行右旋 */
 void Set::rightrotation(RBTNode* k1) {
+    cout << "右旋，基点：" << k1->key << endl;
     RBTNode *k2 = k1->left;
     RBTNode *p = k1->parent;
     RBTColor t = k1->color;
     k1->left = k2->right;
-    k2->right->parent = k1;
+    if (k2->right != NULL)
+        k2->right->parent = k1;
     k2->right = k1;
     k1->parent = k2;
+    if (p != NULL && p->left == k1)
+        p->left = k2;
+    else if (p != NULL && p->right == k1)
+        p->right = k2;
     k2->parent = p;
     k1->color = k2->color;
     k2->color = t;
+    if (k1 == root)
+        root = k2;
 }
 
 /* 执行改色 */
 void Set::changecolor(RBTNode* tree) {
-    if (tree->color == BLACK && tree->left->color == RED && tree->right->color == RED) {
+    if (tree != root) {
+        cout << "改色，二红变一红，基点：" << tree->key << endl;         
+        if (tree->color == BLACK && tree->left->color == RED && tree->right->color == RED) {
+            tree->left->color = tree->right->color = BLACK;
+            tree->color = RED;
+        }
+    }
+    else {
+        cout << "改色，二红变二黑，基点：" << tree->key << endl;                 
         tree->left->color = tree->right->color = BLACK;
-        tree->color = RED;
     }
 }
 
@@ -219,23 +257,32 @@ void Set::changecolor(RBTNode* tree) {
 
 /* 调整 */
 void Set::insadjust(RBTNode* node) {
-    if (node->parent->color == BLACK) { //若父结点为黑
-        if(node == node->parent->right) //若以右儿子插入
-            leftrotation(node->parent);
-    }
-    else { //若父结点为红
-        if (node == node->parent->left) { //若以左儿子插入
-            rightrotation(node->parent);
-            changecolor(node->parent);
-            insadjust(node->parent); //把node->parent视为刚插入的结点递归
+    if (node->parent == NULL) //若是根结点
+        node->color = BLACK;
+    else {
+        if (node->parent->color == BLACK) { //若父结点为黑
+            if(node == node->parent->right) {
+                if (sibling(node) == NULL || sibling(node)->color == BLACK)
+                    leftrotation(node->parent);
+                else {
+                    changecolor(node->parent);
+                    insadjust(node->parent);
+                }
+            }
         }
-        else { //若以右儿子插入
-            leftrotation(node->parent);
-            rightrotation(node->parent);
-            changecolor(node);
-            insadjust(node); //把node视为刚插入的结点递归            
+        else { //若父结点为红
+            if (node == node->parent->left) { //若以左儿子插入
+                rightrotation(grandparent(node));
+                changecolor(node->parent);
+                insadjust(node->parent); //把node->parent视为刚插入的结点递归
+            }
+            else { //若以右儿子插入
+                leftrotation(node->parent);
+                rightrotation(node->parent);
+                changecolor(node);
+                insadjust(node); //把node视为刚插入的结点递归            
+            }
         }
-        
     }
 }
 
