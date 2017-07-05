@@ -50,7 +50,7 @@ class Set {
         void rightrotation(RBTNode* tree); //执行右旋
         void changecolor(RBTNode* tree); //执行改色
         /* 插入删除的辅助函数 */
-        void insadjust(RBTNode* node); //调整
+        void insadjust(RBTNode* node); //插入调整
         void del_adjust1(RBTNode* node); //删除调整一
         void del_adjust2(RBTNode* node); //删除调整二
         void del_adjust3(RBTNode* node); //删除调整三

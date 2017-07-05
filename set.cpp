@@ -255,7 +255,7 @@ void Set::changecolor(RBTNode* tree) {
 
 /* ------插入和删除的辅助函数部分------ */
 
-/* 调整 */
+/* 插入调整 */
 void Set::insadjust(RBTNode* node) {
     if (node->parent == NULL) //若是根结点
         node->color = BLACK;

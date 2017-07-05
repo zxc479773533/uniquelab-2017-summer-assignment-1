@@ -26,3 +26,4 @@ https://zxc479773533.github.io/algorithms/2017/07/02/Priority-Queue
 
 7.5更新：
 1. 左倾红黑树测试完成通过，代码已提交。
+2. 左倾红黑树算法在github.io写了一半，还差插入和删除的算法，明晚接着搞。
