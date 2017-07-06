@@ -4,24 +4,20 @@
 
 /* 插入指定的结点接口 */
 void Set::insert(const T& key) {
-    cout << "插入开始，key：" << key << endl;
     RBTNode* new_node = new RBTNode(RED, key, NULL, NULL, NULL);
     if (root == NULL)
         root = new_node;
     else
         ins(root, new_node);
     insadjust(new_node);
-    cout << "插入结束" << endl;    
 }
 
 /* 插入指定的结点实现 */
 void Set::ins(RBTNode* tree, RBTNode* node) {
     RBTNode *p = tree, *pre = NULL;
     while (p != NULL) {
-        if (p->key == node->key) {
-            cout << "This node has been added!" << endl;
+        if (p->key == node->key)
             break;
-        }
         else if (p->key > node->key) {
             pre = p;
             p = p->left;
@@ -44,67 +40,66 @@ void Set::ins(RBTNode* tree, RBTNode* node) {
 /* 删除指定的结点接口 */
 void Set::erase(const T& key) {
     RBTNode *node = find(root, key);
-    if (node == NULL)
-        cout << "This node isn't exist!" << endl;
-    else
+    if (node != NULL)
         del(node);
 }
 
 /* 删除指定的结点实现 */
 void Set::del(RBTNode* node) {
     if (node->left != NULL && node->left != NULL) { //若要删除的结点有两个子结点
-        RBTNode *min = find_min(node->right);
-        node->key = min->key;
-        del(min);
+        RBTNode *max = find_max(node->left);
+        node->key = max->key;
+        del(max);
     }
     else { //其他情况，若是叶子把一个NULL当做儿子
         RBTNode *P = node->parent; //父结点
         RBTNode *N = son(node); //儿子结点
         RBTColor N_color = (N != NULL)? N->color : BLACK; //儿子结点颜色，空结点当做黑色
         if (node->color == RED) { //若要删除的结点为红
-            if (P->left == node) //用N替换该结点
-                P->left = N;
-            else
-                P->right = N;
-            N->parent = P;
+            replace(node, N); //用N替换该结点
+            if (N != NULL)
+                N->parent = P;
             delete(node);
         }
         else if (node->color == BLACK && N_color == RED) { //若要删除的结点为黑，其儿子为红
             N->color = BLACK; //将其变成黑
-            if (P->left == node) //用N替换该结点
-                P->left = N;
-            else
-                P->right = N;
-            N->parent = P;
+            replace(node, N); //用N替换该结点
+            N->parent = P; //此时N一定非空
             delete(node);
         }
-        else { //若该结点和N均为黑色
-            if (P->left == node) //用N替换该结点
-                P->left = N;
-            else
-                P->right = N;
-            N->parent = P;
+        else { //若该结点和N均为黑色(N可能为NULL)
+            replace(node, N); //用N替换该结点            
+            if (N != NULL) {
+                N->parent = P;
+                del_adjust1(N); //进入情形一
+            }
             delete(node);
-            del_adjust1(N);
         }
     }
 }
 /* 清空树接口 */
 void Set::clear() {
     _clear(root);
+    root = NULL;
 }
 
 /* 清空树实现 */
 void Set::_clear(RBTNode* tree) {
-    while(tree != NULL) {
-        delete(tree->left);
-        delete(tree->right);
-        delete(tree);
-    }
+    if (tree->left != NULL)
+        _clear(tree->left);
+    else if (tree->right != NULL)
+        _clear(tree->right);
+    delete(tree);
+    tree = NULL;
 }
 
 /* 判断数据是否存在接口 */
-int Set::_count(const T& key) {
+int Set::count(const T& key) const {
+    return _count(key);
+}
+
+/* 判断数据是否存在实现 */
+int Set::_count(const T& key) const{
     if (find(root, key) != NULL)
         return 1;
     else
@@ -135,7 +130,7 @@ size_t Set::_size(RBTNode*  tree) {
 /* ------内部操作函数部分------ */
 
 /* 查找 */
-RBTNode* Set::find(RBTNode* tree, const T& key) {
+RBTNode* Set::find(RBTNode* tree, const T& key) const{
     if (tree == NULL)
         return NULL;
     else {
@@ -196,7 +191,6 @@ RBTNode* Set::uncle(RBTNode* tree) {
 
 /* 执行左旋 */
 void Set::leftrotation(RBTNode* k1) {
-    cout << "左旋，基点：" << k1->key << endl;
     RBTNode *k2 = k1->right;
     RBTNode *p = k1->parent;
     RBTColor t = k1->color;
@@ -218,7 +212,6 @@ void Set::leftrotation(RBTNode* k1) {
 
 /* 执行右旋 */
 void Set::rightrotation(RBTNode* k1) {
-    cout << "右旋，基点：" << k1->key << endl;
     RBTNode *k2 = k1->left;
     RBTNode *p = k1->parent;
     RBTColor t = k1->color;
@@ -241,16 +234,13 @@ void Set::rightrotation(RBTNode* k1) {
 /* 执行改色 */
 void Set::changecolor(RBTNode* tree) {
     if (tree != root) {
-        cout << "改色，二红变一红，基点：" << tree->key << endl;         
         if (tree->color == BLACK && tree->left->color == RED && tree->right->color == RED) {
             tree->left->color = tree->right->color = BLACK;
             tree->color = RED;
         }
     }
-    else {
-        cout << "改色，二红变二黑，基点：" << tree->key << endl;                 
+    else
         tree->left->color = tree->right->color = BLACK;
-    }
 }
 
 /* ------插入和删除的辅助函数部分------ */
@@ -286,9 +276,25 @@ void Set::insadjust(RBTNode* node) {
     }
 }
 
+/* 结点替换 */
+void Set::replace(RBTNode* node, RBTNode* N) {
+    RBTNode *P = node->parent; //父结点    
+    if (P == NULL) { //若要被换掉的是根结点
+        if (N != NULL)
+            N->parent = NULL;
+        root = N;
+    }
+    else {
+        if (P->left == node)
+            P->left = N;
+        else
+            P->right = N;
+    }
+}
+
 /* 删除调整一 */
 void Set::del_adjust1(RBTNode* N) {
-    if (N->parent != NULL) //若N不是根节点，进入情形二
+    if (N != root) //若N不是根节点，进入情形二
         del_adjust2(N);
 }
 
@@ -310,43 +316,66 @@ void Set::del_adjust2(RBTNode* N) {
 void Set::del_adjust3(RBTNode* N) {
     RBTNode *S = sibling(N);
     RBTNode *P = N->parent;
-    if (P->color == BLACK && 
-    (S->color == BLACK || S == NULL) &&
-    (S->left->color == BLACK || S->left == NULL) &&
-    (S->right->color == BLACK || S->right == NULL)) {
+    if (S == NULL) //S为空时直接向上一步递归
+        del_adjust1(P);
+    else if (P->color == BLACK && 
+    (S->color == BLACK) &&
+    (S->left == NULL || S->left->color == BLACK) &&
+    (S->right == NULL || S->right->color == BLACK)) { //P为红，S为黑，且S的左右儿子为空或者为黑
         if (P->left == N) { //若N是P的左儿子
             leftrotation(P);
             P->color = RED;
             del_adjust1(S);
         }
         else { //若N是P的右儿子
-            if (S != NULL)
-                S->color = RED;
+            S->color = RED;
             del_adjust1(P);
         }
     }
-    else if (P->color == RED && 
-    (S->color == BLACK || S == NULL) &&
-    (S->left->color == BLACK || S->left == NULL) &&
-    (S->right->color == BLACK || S->right == NULL)) {
+    else if ((P->color == RED) && (S->color == BLACK) &&
+    (S->left == NULL || S->left->color == BLACK) &&
+    (S->right == NULL || S->right->color == BLACK)) { //P为红，S为黑，且S的左右儿子为空或者为黑
         P->color = BLACK;
         S->color = RED;
         if (P->left == N) //若N是P的左儿子
-            leftrotation(P);
+            leftrotation(P); 
     }
-    else {
+    else if ((P->color == RED) && (S->color == BLACK) &&
+    (S->left != NULL && S->left->color == RED) &&
+    (S->right == NULL || S->right->color == BLACK)) { //P为红，S为黑，且S的左儿子为红，右儿子为空或者为黑
         if (P->left == N) { //若N是P的左儿子
             leftrotation(P);
-            rightrotation(P);
-            del_adjust4(S->right);
+            leftrotation(P);
+            if (S->right != NULL)
+                del_adjust4(S->right);
         }
         else //若N是P的右儿子
             del_adjust4(N);
+    }
+    else if ((P->color == BLACK) && (S->color == BLACK) &&
+    (S->left != NULL && S->left->color == RED) &&
+    (S->right == NULL || S->right->color == BLACK)) { //P为黑，S为黑，且S的左儿子为红，右儿子为空或者为黑
+        if (P->left == N) { //若N是P的左儿子
+            leftrotation(P);
+            leftrotation(P);
+            if (S->right != NULL)
+                del_adjust5(S->right);
+        }
+        else //若N是P的右儿子
+            del_adjust5(N);
     }
 }
 
 /* 删除调整四 */
 void Set::del_adjust4(RBTNode* N) {
+    RBTNode *S = sibling(N);
+    RBTNode *P = N->parent;
+    rightrotation(P);
+    S->left->color = BLACK;
+}
+
+/* 删除调整五 */
+void Set::del_adjust5(RBTNode* N) {
     RBTNode *S = sibling(N);
     RBTNode *P = N->parent;
     rightrotation(P);

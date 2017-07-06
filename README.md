@@ -12,7 +12,8 @@ UniqueLab Summer Camp Assignment 0
 
 ---华---丽---的---分---割---线---
 
-7.2更新：优先队列算法总结已在个人github.io更新：
+7.2更新：
+1. 优先队列算法总结已在个人github.io更新：
 
 https://zxc479773533.github.io/algorithms/2017/07/02/Priority-Queue
 
@@ -27,3 +28,6 @@ https://zxc479773533.github.io/algorithms/2017/07/02/Priority-Queue
 7.5更新：
 1. 左倾红黑树测试完成通过，代码已提交。
 2. 左倾红黑树算法在github.io写了一半，还差插入和删除的算法，明晚接着搞。
+
+7.6更新：
+1. 完成了新版的优先队列和左倾红黑树测试。
