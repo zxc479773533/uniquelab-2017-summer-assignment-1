@@ -1,5 +1,6 @@
 #include <set>
 #include <random>
+#include <iostream>
 #include "include/gtest/gtest.h"
 
 #include "set.h"
@@ -12,6 +13,7 @@ protected:
 
     virtual void TearDown() {
         time_t end_time = time(NULL);
+        std::cout << "This test takes " << end_time-start_time << "times." << std::endl;
         ASSERT_TRUE(end_time - start_time <= 10) << "The test took too long.";
     }
 
@@ -158,4 +160,12 @@ TEST_F(setTest, random) {
         ASSERT_EQ(std_set.size(), 0);
         ASSERT_EQ(custom_set.size(), 0);
     }
+}
+
+TEST_F(setTest,ordered_big){
+    Set custom_set;
+    for(unsigned i =0;i<1000000;i++){
+        custom_set.insert(((double)i));
+    }
+    ASSERT_EQ(custom_set.size(),1000000);
 }
