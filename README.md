@@ -31,3 +31,7 @@ https://zxc479773533.github.io/algorithms/2017/07/02/Priority-Queue
 
 7.6更新：
 1. 完成了新版的优先队列和左倾红黑树测试。
+
+7.7更新：
+1. 之前强行让标准红黑树左倾的算法改名为 llrb_use_parrnt.cpp.
+2. 完成了钦定算法的左倾红黑树，完成了八组测试。
