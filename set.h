@@ -1,3 +1,7 @@
+#ifndef SET //include保护
+#define SET
+
+
 /* 左倾红黑树 */
 #include <iostream>
 #include <algorithm>
@@ -27,6 +31,8 @@ class Set {
         int count(const T& element) const; //返回该数据是否存在
         bool empty(); //返回该树是否为空
         size_t size(); //返回树中结点的个数
+    //析构函数
+        ~Set() {delete root;}
     private:
         RBTNode *root = NULL;
         int currentsize = 0;
@@ -46,3 +52,5 @@ class Set {
         RBTNode* move_red_right(RBTNode* tree); //移动红色到右侧
         RBTNode* delete_min(RBTNode* tree); //删除tree的最大结点
 };
+
+#endif

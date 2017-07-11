@@ -2,10 +2,7 @@
 
 /* 判断队列是否为空,若为空，返回true */
 bool Priority_queue::empty() const {
-    if (currentsize == 0)
-        return true;
-    else
-        return false;
+    return !currentsize;
 }
 
 /* 返回队列中数据的个数 */
