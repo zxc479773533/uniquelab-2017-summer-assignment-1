@@ -21,15 +21,7 @@ RBTNode* Set::ins(RBTNode* tree, T key) {
         tree->left = ins(tree->left, key);
     else
         tree->right = ins(tree->right, key);
-    /* 如果是右儿子插入，化归为左儿子插入的问题 */
-    if (isred(tree->right))
-        tree = rotate_left(tree);
-    /* 如果是左儿子插入，右旋 */
-    if (tree->left != NULL && isred(tree->left) && isred(tree->left->left))
-        tree = rotate_right(tree);
-    /* 判断是否需要改色,并且将改色问题递归上去 */
-    if (isred(tree->left) && isred(tree->right))
-        color_flip(tree);
+    fix_up(tree);
     return tree;
 } //PS：这样做的好处在于一边插入一边调整，比红黑树简化了很多
 
@@ -184,11 +176,13 @@ RBTNode* Set::color_flip(RBTNode* k1) {
 
 /* 调整 */
 RBTNode* Set::fix_up(RBTNode* node) {
-    /* 这里和插入时的三种情形一致 */
+    /* 如果是右儿子插入，化归为左儿子插入的问题 */
     if (isred(node->right))
         node = rotate_left(node);
+    /* 如果是左儿子插入，右旋 */
     if (node->left != NULL && isred(node->left) && isred(node->left->left))
         node = rotate_right(node);
+    /* 判断是否需要改色,并且将改色问题递归上去 */
     if (isred(node->left) && isred(node->right))
         color_flip(node);
     return node;
