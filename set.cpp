@@ -21,7 +21,7 @@ RBTNode* Set::ins(RBTNode* tree, T key) {
         tree->left = ins(tree->left, key);
     else
         tree->right = ins(tree->right, key);
-    fix_up(tree);
+    tree = fix_up(tree);
     return tree;
 } //PS：这样做的好处在于一边插入一边调整，比红黑树简化了很多
 
