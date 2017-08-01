@@ -38,5 +38,8 @@ https://zxc479773533.github.io/algorithms/2017/07/02/Priority-Queue
 
 7.11最后更新：
 1. 根据7.8晚上的mu指出的问题修改了下代码
+2. 左倾红黑树算法总结已在个人github.io更新：
+
+https://zxc479773533.github.io/algorithms/2017/07/07/LLRBTree
 
 ---MISSION---COMPLETE---
